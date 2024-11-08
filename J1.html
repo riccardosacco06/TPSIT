@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottoni con 3 Stili Diversi</title>
+    <style>
+        /* CSS */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Stile del bottone 1 - Piatto */
+        .btn-flat {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: 2px solid #5a2d02;
+            background-color: white;
+            color: #8a4606;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-flat:hover {
+            background-color: #724100;
+            color: white;
+        }
+
+        /* Stile del bottone 2 - Bordi arrotondati */
+        .btn-rounded {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            background-color: #6d6e6e;
+            color: white;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-rounded:hover {
+            background-color: 	#B30033;
+        }
+
+        /* Stile del bottone 3 - Effetto 3D */
+        .btn-3d {
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            background-color: 	#B30033;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px #888888;
+            transition: all 0.3s ease;
+        }
+
+        .btn-3d:hover {
+            background-color: #d32f2f;
+            box-shadow: 0 6px #666666;
+            transform: translateY(-2px);
+        }
+
+        .btn-3d:active {
+            box-shadow: 0 2px #666666;
+            transform: translateY(2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="button-container">
+        <button class="btn-flat" onclick="showMessage1()">SEMPRE</button>
+        <button class="btn-rounded" onclick="showMessage2()">FORZA</button>
+        <button class="btn-3d" onclick="showMessage3()">SEMPRE E SOLO</button>
+    </div>
+
+    <script>
+        // JavaScript
+        function showMessage1() {
+            alert("JUVE MERDA");
+        }
+
+        function showMessage2() {
+            alert("VECCHIO CUORE GRANATA");
+        }
+
+        function showMessage3() {
+            alert("FORZA TORO");
+        }
+    </script>
+
+</body>
+</html>
