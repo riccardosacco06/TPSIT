@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aforismi di Scienziati</title>
+    <style>
+        .aforisma {
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        button {
+            margin-top: 10px;
+            padding: 5px 15px;
+            cursor: pointer;
+            background-color: #1a5703;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        function toggleVisibility(id) {
+            var aforismaDiv = document.getElementById(id);
+            if (aforismaDiv.style.display === "none") {
+                aforismaDiv.style.display = "block";
+            } else {
+                aforismaDiv.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Aforismi di Scienziati</h1>
+
+    <div class="aforisma" id="aforisma1">
+        <p>“La scienza non è che un modo di pensare più preciso.” - Albert Einstein</p>
+        <button onclick="toggleVisibility('aforisma1')">Nascondi</button>
+    </div>
+
+    <div class="aforisma" id="aforisma2">
+        <p>“L'immaginazione è più importante della conoscenza.” - Albert Einstein</p>
+        <button onclick="toggleVisibility('aforisma2')">Nascondi</button>
+    </div>
+
+    <div class="aforisma" id="aforisma3">
+        <p>“Non è che siamo così intelligenti, è che restiamo con i problemi più a lungo.” - Albert Einstein</p>
+        <button onclick="toggleVisibility('aforisma3')">Nascondi</button>
+    </div>
+
+    <div class="aforisma" id="aforisma4">
+        <p>“La matematica è il linguaggio con cui Dio ha scritto l'universo.” - Galileo Galilei</p>
+        <button onclick="toggleVisibility('aforisma4')">Nascondi</button>
+    </div>
+
+    <div class="aforisma" id="aforisma5">
+        <p>“Se non riesci a spiegarlo semplicemente, non lo capisci abbastanza bene.” - Albert Einstein</p>
+        <button onclick="toggleVisibility('aforisma5')">Nascondi</button>
+    </div>
+
+</body>
+</html>
