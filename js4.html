@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcolatore Dislivello</title>
+</head>
+<body>
+
+<h1>Calcolatore Dislivello</h1>
+
+
+Altezza punto di partenza (m): <input type="number" id="start-height"><br>
+Altezza punto di arrivo (m): <input type="number" id="end-height"><br>
+
+
+<button onclick="calculateDislivello()">Calcola Dislivello</button>
+
+
+<p id="result"></p>
+
+<script>
+    function calculateDislivello() {
+        
+        const startHeight = parseInt(document.getElementById("start-height").value);
+        const endHeight = parseInt(document.getElementById("end-height").value);
+
+        if (isNaN(startHeight) || isNaN(endHeight)) {
+            alert("Per favore inserisci entrambi i valori.");
+            return;
+        }
+
+       
+        const dislivello = Math.abs(startHeight - endHeight);
+
+        
+        document.getElementById("result").textContent = `Dislivello totale: ${dislivello} metri.`;
+    }
+</script>
+
+</body>
+</html>
+
+
+
