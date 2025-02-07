@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bottoni e Tempo</title>
+    <style>
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 16px;
+        }
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Premi uno dei seguenti bottoni</h1>
+    
+    <!-- 4 bottoni -->
+    <button id="button1">Bottone 1</button>
+    <button id="button2">Bottone 2</button>
+    <button id="button3">Bottone 3</button>
+    <button id="button4">Bottone 4</button>
+
+    <div id="output"></div>
+
+    <script>
+        // Array per memorizzare i tempi tra il primo clic e i successivi
+        let timeDifferences = [];
+        let firstClickTime = null;
+
+        // Funzione per stampare data e ora
+        function printDateTime() {
+            const now = new Date();
+            const currentTime = now.toLocaleString();
+            document.getElementById('output').innerHTML = `Data e Ora: ${currentTime}`;
+            return now.getTime(); // Restituisce il timestamp in millisecondi
+        }
+
+        // Funzione per calcolare la differenza di tempo
+        function calculateTimeDifference(firstTime, secondTime) {
+            const diff = (secondTime - firstTime) / 1000; // Differenza in secondi
+            timeDifferences.push(diff); // Memorizza la differenza in secondi
+            return diff;
+        }
+
+        // Gestore degli eventi per i bottoni
+        function handleButtonClick(event) {
+            const currentClickTime = printDateTime();
+            
+            if (firstClickTime === null) {
+                // Primo click
+                firstClickTime = currentClickTime;
+            } else {
+                // Calcolare la differenza di tempo solo per i successivi
+                const timeDiff = calculateTimeDifference(firstClickTime, currentClickTime);
+                console.log(`Differenza di tempo (in secondi) tra il primo e il click su ${event.target.id}: ${timeDiff} s`);
+            }
+        }
+
+        // Aggiungere gli event listener ai bottoni
+        document.getElementById('button1').addEventListener('click', handleButtonClick);
+        document.getElementById('button2').addEventListener('click', handleButtonClick);
+        document.getElementById('button3').addEventListener('click', handleButtonClick);
+        document.getElementById('button4').addEventListener('click', handleButtonClick);
+    </script>
+</body>
+</html>
