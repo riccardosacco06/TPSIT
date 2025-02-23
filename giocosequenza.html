@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco Memory Sequenziale</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        .game-button {
+            padding: 30px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .lit {
+            box-shadow: 0 0 20px rgba(32, 82, 146, 0.8);
+            filter: brightness(1.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1>Memory Sequenziale</h1>
+        <p>Ripeti la sequenza in ordine!</p>
+        <button id="startGame" class="btn btn-success mb-4">Inizia Gioco</button>
+        <h3>Punteggio: <span id="score">0</span></h3>
+        
+        <div class="game-board">
+            <button class="game-button btn btn-primary" data-id="0"></button>
+            <button class="game-button btn btn-danger" data-id="1"></button>
+            <button class="game-button btn btn-warning" data-id="2"></button>
+            <button class="game-button btn btn-info" data-id="3"></button>
+            <button class="game-button btn btn-success" data-id="4"></button>
+            <button class="game-button btn btn-secondary" data-id="5"></button>
+            <button class="game-button btn btn-dark" data-id="6"></button>
+            <button class="game-button btn btn-light" data-id="7"></button>
+            <button class="game-button btn btn-primary" data-id="8"></button>
+        </div>
+    </div>
+
+    <script>
+        const startButton = document.getElementById('startGame');
+        const scoreDisplay = document.getElementById('score');
+        const buttons = document.querySelectorAll('.game-button');
+        
+        let sequence = [];
+        let playerSequence = [];
+        let level = 0;
+
+        function startGame() {
+            sequence = [];
+            playerSequence = [];
+            level = 0;
+            scoreDisplay.innerText = level;
+            nextLevel();
+        }
+
+        function nextLevel() {
+            level++;
+            playerSequence = [];
+            scoreDisplay.innerText = level;
+            sequence.push(Math.floor(Math.random() * 9));
+            playSequence();
+        }
+
+        function playSequence() {
+            let delay = 500;
+            sequence.forEach((num, index) => {
+                setTimeout(() => {
+                    illuminateButton(num);
+                }, delay * (index + 1));
+            });
+        }
+
+        function illuminateButton(num) {
+            const button = document.querySelector(`.game-button[data-id='${num}']`);
+            button.classList.add('lit');
+            setTimeout(() => {
+                button.classList.remove('lit');
+            }, 300);
+        }
+
+        buttons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const id = parseInt(event.target.getAttribute('data-id'));
+                playerSequence.push(id);
+                checkSequence();
+            });
+        });
+
+        function checkSequence() {
+            const currentIndex = playerSequence.length - 1;
+            if (playerSequence[currentIndex] !== sequence[currentIndex]) {
+                alert('Hai sbagliato! Riprova.');
+                startGame();
+                return;
+            }
+
+            if (playerSequence.length === sequence.length) {
+                setTimeout(() => {
+                    nextLevel();
+                }, 1000);
+            }
+        }
+
+        startButton.addEventListener('click', startGame);
+    </script>
+</body>
+</html>
