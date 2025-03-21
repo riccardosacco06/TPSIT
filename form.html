@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form con invio POST e visualizzazione dati</title>
+    <script>
+        function inviaDati(event) {
+            event.preventDefault();
+
+            let nome = document.getElementById("nome").value;
+            let email = document.getElementById("email").value;
+
+            let dati = {
+                nome: nome,
+                email: email
+            };
+
+            let risultatoDiv = document.getElementById("risultato");
+            risultatoDiv.innerHTML = `
+                <h3>Dati inviati:</h3>
+                <p><strong>Nome:</strong> ${dati.nome}</p>
+                <p><strong>Email:</strong> ${dati.email}</p>
+            `;
+        }
+    </script>
+</head>
+<body>
+
+<h1>Form di invio dati</h1>
+
+<form id="form" onsubmit="inviaDati(event)">
+    <label for="nome">Nome:</label><br>
+    <input type="text" id="nome" name="nome" required><br><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+
+    <button type="submit">Invia</button>
+</form>
+
+<div id="risultato"></div>
+
+</body>
+</html>

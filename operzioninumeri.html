@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Numeri e Proprietà</title>
+    <style>
+        .primo {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Proprietà dei numeri da 1 a 10000</h1>
+<div id="output"></div>
+
+<script>
+    function isPrimo(n) {
+        if (n <= 1) return false;
+        for (let i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) return false;
+        }
+        return true;
+    }
+
+    function calcolaProprieta(numero) {
+        let risultato = '';
+
+        // Parità
+        risultato += (numero % 2 === 0) ? 'Pari' : 'Dispari';
+
+        // Primo
+        if (isPrimo(numero)) {
+            risultato += ' (Primo)';
+        } else {
+            risultato += ' (Non Primo)';
+        }
+
+        // Doppio e metà intera
+        let doppio = numero * 2;
+        let meta = Math.floor(numero / 2);
+        risultato += ` | Doppio: ${doppio} | Meta intera: ${meta}`;
+
+        // Complemento
+        let complemento = 1000 - numero;
+        risultato += ` | Complemento (1000 - n): ${complemento}`;
+
+        // Somma con il precedente e il successivo
+        let somma = (numero - 1) + numero + (numero + 1);
+        risultato += ` | Somma con il precedente e il successivo: ${somma}`;
+
+        // Moltiplicazione per 3.14 e 2.71
+        let moltiplicazione3_14 = (numero * 3.14).toFixed(2);
+        let moltiplicazione2_71 = (numero * 2.71).toFixed(2);
+        risultato += ` | Moltiplicazione per 3.14: ${moltiplicazione3_14} | Moltiplicazione per 2.71: ${moltiplicazione2_71}`;
+
+        return risultato;
+    }
+
+    function stampaProprieta() {
+        let outputDiv = document.getElementById('output');
+        let content = '';
+
+        for (let i = 1; i <= 10000; i++) {
+            let risultato = calcolaProprieta(i);
+            if (isPrimo(i)) {
+                content += `<p class="primo">${risultato}</p>`;
+            } else {
+                content += `<p>${risultato}</p>`;
+            }
+        }
+
+        outputDiv.innerHTML = content;
+    }
+
+    // Chiamata della funzione
+    stampaProprieta();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morra 3a-BoT</title>
+</head>
+<body>
+    <h1>MOORRA 3a-BoT</h1>
+    <p id="out1"></p>
+    <p>Morra bot tira:</p>
+    <button onclick="TiroMorraBot()">START TIRO</button>
+    <p id="out2"></p>
+
+    <script>
+        // Array con le scelte possibili
+        const scelte = ["Carta", "Forbice", "Sasso"];
+
+        // Funzione per tirare la "morra" del bot
+        function TiroMorraBot() {
+            const sceltaBot = scelte[Math.floor(Math.random() * scelte.length)];
+            const sceltaUtente = prompt("Scegli: Carta, Forbice o Sasso").toLowerCase();
+
+            if (!scelte.includes(sceltaUtente.charAt(0).toUpperCase() + sceltaUtente.slice(1))) {
+                alert("Scelta non valida! Devi scegliere tra Carta, Forbice o Sasso.");
+                return;
+            }
+
+            // Mostra la scelta del bot e dell'utente
+            document.getElementById("out1").innerHTML = "Il Bot ha scelto: " + sceltaBot;
+            document.getElementById("out2").innerHTML = "Hai scelto: " + sceltaUtente.charAt(0).toUpperCase() + sceltaUtente.slice(1);
+
+            // Confronta i risultati
+            const risultato = determinaVincitore(sceltaBot, sceltaUtente);
+            alert(risultato);
+        }
+
+        // Funzione che determina il vincitore
+        function determinaVincitore(bot, utente) {
+            if (bot === utente) {
+                return "È un pareggio!";
+            } else if (
+                (bot === "Carta" && utente === "Sasso") ||
+                (bot === "Forbice" && utente === "Carta") ||
+                (bot === "Sasso" && utente === "Forbice")
+            ) {
+                return "Il Bot ha vinto!";
+            } else {
+                return "Hai vinto!";
+            }
+        }
+    </script>
+</body>
+</html>
+
