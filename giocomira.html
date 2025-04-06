@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gioco di Mira</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f0f0f0;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #mirino {
+            border-radius: 50%;
+            background-color: red;
+            position: absolute;
+            cursor: pointer;
+            display: none;
+        }
+
+        #punteggio, #tempo {
+            position: fixed;
+            top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: black;
+        }
+
+        #punteggio {
+            left: 20px;
+        }
+
+        #tempo {
+            right: 20px;
+        }
+
+        #menu {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 25px;
+            color: black;
+        }
+
+        .button {
+            background-color: #4CAF50;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="menu">
+        <h1>Seleziona la difficoltà</h1>
+        <button class="button" id="facile">FACILE</button>
+        <button class="button" id="normale">NORMALE</button>
+        <button class="button" id="difficile">DIFFICILE</button>
+    </div>
+
+    <div id="punteggio">Punteggio: 0</div>
+    <div id="tempo">Tempo: 60</div>
+    <div id="mirino"></div>
+
+    <script>
+        let punteggio = 0;
+        let tempo = 60;
+        let timerInterval;
+        let dimensioneMirino = 50;
+        let limiteX, limiteY;
+        let giocoIniziato = false;
+
+        const mirino = document.getElementById('mirino');
+        const punteggioElement = document.getElementById('punteggio');
+        const tempoElement = document.getElementById('tempo');
+        const menuElement = document.getElementById('menu');
+        const difficoltaBtns = document.querySelectorAll('.button');
+
+        function spostaMirino() {
+            const x = Math.random() * limiteX;
+            const y = Math.random() * limiteY;
+            mirino.style.left = `${x}px`;
+            mirino.style.top = `${y}px`;
+        }
+
+        function aggiornaPunteggio() {
+            punteggio++;
+            punteggioElement.textContent = `Punteggio: ${punteggio}`;
+        }
+
+        function aggiornaTempo() {
+            tempo--;
+            tempoElement.textContent = `Tempo: ${tempo}`;
+            if (tempo === 0) {
+                clearInterval(timerInterval);
+                alert(`Tempo scaduto! Il tuo punteggio finale è: ${punteggio}`);
+                resetGioco();
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(aggiornaTempo, 1000);
+        }
+
+        function setDifficolta(difficolta) {
+            if (difficolta === 'facile') {
+                dimensioneMirino = 80;
+                limiteX = window.innerWidth * 0.7;
+                limiteY = window.innerHeight * 0.7;
+            } else if (difficolta === 'normale') {
+                dimensioneMirino = 50;
+                limiteX = window.innerWidth * 0.8;
+                limiteY = window.innerHeight * 0.8;
+            } else if (difficolta === 'difficile') {
+                dimensioneMirino = 30;
+                limiteX = window.innerWidth * 0.5;
+                limiteY = window.innerHeight * 0.5;
+            }
+            mirino.style.width = `${dimensioneMirino}px`;
+            mirino.style.height = `${dimensioneMirino}px`;
+            spostaMirino();  
+        }
+
+        function iniziaGioco() {
+            giocoIniziato = true;
+            punteggio = 0;
+            tempo = 60;
+            punteggioElement.textContent = `Punteggio: ${punteggio}`;
+            tempoElement.textContent = `Tempo: ${tempo}`;
+            startTimer();
+            menuElement.style.display = 'none';
+            mirino.style.display = 'block';  
+        }
+
+        function resetGioco() {
+            giocoIniziato = false;
+            menuElement.style.display = 'block';
+            mirino.style.display = 'none';
+        }
+
+        mirino.addEventListener('click', () => {
+            if (!giocoIniziato) {
+                iniziaGioco();
+            } else {
+                aggiornaPunteggio();
+                spostaMirino();
+            }
+        });
+
+        difficoltaBtns.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                setDifficolta(e.target.id);
+                iniziaGioco();
+            });
+        });
+    </script>
+
+</body>
+</html>
