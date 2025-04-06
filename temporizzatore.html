@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Div Casuali Sovrapposti</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .div {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+        }
+
+        .blu {
+            background-color: blue;
+        }
+
+        .giallo {
+            background-color: yellow;
+        }
+
+        .rosso {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="div blu" id="blu"></div>
+    <div class="div giallo" id="giallo"></div>
+
+    <script>
+        function posizioneCasuale() {
+            const larghezza = window.innerWidth - 100;
+            const altezza = window.innerHeight - 100;
+            const x = Math.random() * larghezza;
+            const y = Math.random() * altezza;
+            return { x, y };
+        }
+
+        function controllaSovrapposizione() {
+            const blu = document.getElementById('blu');
+            const giallo = document.getElementById('giallo');
+
+            const rettangoloBlu = blu.getBoundingClientRect();
+            const rettangoloGiallo = giallo.getBoundingClientRect();
+
+            const sovrapposizione = !(rettangoloBlu.right < rettangoloGiallo.left ||
+                                      rettangoloBlu.left > rettangoloGiallo.right ||
+                                      rettangoloBlu.bottom < rettangoloGiallo.top ||
+                                      rettangoloBlu.top > rettangoloGiallo.bottom);
+
+            if (sovrapposizione) {
+                blu.classList.add('rosso');
+                giallo.classList.add('rosso');
+            } else {
+                blu.classList.remove('rosso');
+                giallo.classList.remove('rosso');
+            }
+        }
+
+        function posizionaDiv() {
+            const blu = document.getElementById('blu');
+            const giallo = document.getElementById('giallo');
+
+            const posizioneBlu = posizioneCasuale();
+            const posizioneGiallo = posizioneCasuale();
+
+            blu.style.left = posizioneBlu.x + 'px';
+            blu.style.top = posizioneBlu.y + 'px';
+            giallo.style.left = posizioneGiallo.x + 'px';
+            giallo.style.top = posizioneGiallo.y + 'px';
+
+            controllaSovrapposizione();
+        }
+
+        setInterval(posizionaDiv, 2000);
+    </script>
+</body>
+</html>
