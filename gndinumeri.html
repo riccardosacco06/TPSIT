@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Numeri Casuali</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <h2>Grafico Numeri Casuali</h2>
+  <canvas id="grafico" width="800" height="400"></canvas>
+
+  <script>
+    const L1 = 0, L2 = 1, mediaTeorica = (L2 - L1) / 2;
+    const numeri = [], rapporti = [], distanze = [], medie50 = [];
+
+    const ctx = document.getElementById('grafico').getContext('2d');
+    const grafico = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [
+          { label: 'Casuali', data: [], borderColor: 'blue', fill: false },
+          { label: 'Rapporto', data: [], borderColor: 'green', fill: false },
+          { label: 'Distanza da Media', data: [], borderColor: 'red', fill: false }
+        ]
+      },
+      options: { animation: false }
+    });
+
+    function aggiornaDati() {
+      const num = Math.random(); // float tra 0 e 1
+      numeri.push(num);
+      rapporti.push(numeri.length > 1 ? num / numeri[numeri.length - 2] : 0);
+      distanze.push(Math.abs(num - mediaTeorica));
+
+      if (numeri.length % 50 === 0) {
+        const media = numeri.slice(-50).reduce((a, b) => a + b) / 50;
+        medie50.push(media);
+        console.log("Media ultimi 50:", media.toFixed(4));
+      }
+
+      if (numeri.length > 100) {
+        numeri.shift(); rapporti.shift(); distanze.shift(); // Mantieni al massimo 100 valori per il grafico
+      }
+
+      grafico.data.labels = numeri.map((_, i) => i);
+      grafico.data.datasets[0].data = numeri;
+      grafico.data.datasets[1].data = rapporti;
+      grafico.data.datasets[2].data = distanze;
+      grafico.update();
+    }
+
+    setInterval(aggiornaDati, 500);
+  </script>
+</body>
+</html>
